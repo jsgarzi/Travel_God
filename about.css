@@ -1,0 +1,49 @@
+body{
+    background-color: #D7d0c8;
+    color: #34353f;
+}
+
+nav{
+    background-color: #34353f;
+    margin-bottom: 20px ;
+}
+
+.grey-text{
+    color: #34353f;
+}
+
+.center{
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.card-content{
+    word-wrap: break-word;
+}
+
+.card-title{
+    margin-top: 50px;
+    color: #34353f;
+
+}
+
+.card-content{
+    color: #34353f;
+
+}
+
+.card{
+    margin-left: 10px;
+    justify-content: center;
+
+
+}
+.collection{
+    color: #34353f;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
