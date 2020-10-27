@@ -22,6 +22,13 @@ nav{
 margin-bottom: 50px;
 }
 
+.card-content{
+  word-wrap: break-word;
+}
+.card-title{
+  word-wrap: normal;
+  }
+
 .pac-card {
     margin: 10px 10px 0px 0;
     border-radius: 2px 0 0 2px;
