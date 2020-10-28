@@ -2,7 +2,6 @@
 let map;
 
 var currentLocation;
-var options = 
 
 
 function initMap() {
