@@ -1,5 +1,4 @@
 
-//MAP STUFF
 let map;
 
 function initMap() {
@@ -63,3 +62,34 @@ function initMap() {
     });
 }
 /////////////////
+
+var getEvents = [];
+
+$.ajax({
+  type: "GET",
+  url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m",
+  async: true,
+  dataType: "json",
+  success: function(json) {
+      getEvents.json = json;
+      showEvents(json);
+      console.log(json);
+      }
+});
+
+
+function showEvents(json) {
+  var items = $('#events .list-group-item');
+  var events = json._embedded.events;
+  var item = items.first();
+  for (var i=0; i< events.length; i++) {
+    item.children('.list-group-item-heading').text(events[i].name);
+    item.children('.list-group-item-text').text(events[i].dates.start.localDate);
+    item.children('.list-group-url').text(events[i].url);
+    try {
+      item.children('.venue').text(events[i]._embedded.venues[0].name + " in " + events[i]._embedded.venues[0].city.name + " url " + events[i]._embedded.venues[0].url);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
