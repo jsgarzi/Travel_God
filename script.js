@@ -2,8 +2,6 @@
 let map;
 
 var currentLocation;
-var options =
-
 
     function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -65,6 +63,9 @@ var options =
             });
             map.setOptions({ minZoom: 12, maxZoom: 16 }) //fixed zoom to make more sense on search of city
             map.fitBounds(bounds);
+        
+            //function to get weather
+
         });
     }
 /////////////////
@@ -101,7 +102,7 @@ var options =
 //   }
 // }
 
-// Weather API
+Weather API
 
 $(document).ready(function () {
 
@@ -196,3 +197,4 @@ $(document).ready(function () {
 
 
 });
+
