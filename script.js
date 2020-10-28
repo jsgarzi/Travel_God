@@ -2,71 +2,71 @@
 let map;
 
 var currentLocation;
-var options = 
+var options =
 
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 40.7306, lng: -73.9352 },
-        zoom: 12,
-    });
-    const input = document.getElementById("travel-input");
-    const searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(input);
-    // Bias the SearchBox results towards current map's viewport.
-    map.addListener("bounds_changed", () => {
-        searchBox.setBounds(map.getBounds());
-    });
-    let markers = [];
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
-    searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        console.log(places) //where the name is captured 
-        currentLocation = places[0].name; //storing the name
-        console.log(currentLocation);
-        if (places.length == 0) {
-            return;
-        }
-        // Clear out the old markers.
-        markers.forEach((marker) => {
-            marker.setMap(null);
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 40.7306, lng: -73.9352 },
+            zoom: 12,
         });
-        markers = [];
-        // For each place, get the icon, name and location.
-        const bounds = new google.maps.LatLngBounds();
-        places.forEach((place) => {
-            if (!place.geometry) {
-                console.log("Returned place contains no geometry");
+        const input = document.getElementById("travel-input");
+        const searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(input);
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener("bounds_changed", () => {
+            searchBox.setBounds(map.getBounds());
+        });
+        let markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener("places_changed", () => {
+            const places = searchBox.getPlaces();
+            console.log(places) //where the name is captured 
+            currentLocation = places[0].name; //storing the name
+            console.log(currentLocation);
+            if (places.length == 0) {
                 return;
             }
-            const icon = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25),
-            };
-            // Create a marker for each place.
-            markers.push(
-                new google.maps.Marker({
-                    map,
-                    icon,
-                    title: place.name,
-                    position: place.geometry.location,
-                })
-            );
-            if (place.geometry.viewport) {
-                // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-            } else {
-                bounds.extend(place.geometry.location);
-            }
+            // Clear out the old markers.
+            markers.forEach((marker) => {
+                marker.setMap(null);
+            });
+            markers = [];
+            // For each place, get the icon, name and location.
+            const bounds = new google.maps.LatLngBounds();
+            places.forEach((place) => {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                const icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25),
+                };
+                // Create a marker for each place.
+                markers.push(
+                    new google.maps.Marker({
+                        map,
+                        icon,
+                        title: place.name,
+                        position: place.geometry.location,
+                    })
+                );
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            map.setOptions({ minZoom: 12, maxZoom: 16 }) //fixed zoom to make more sense on search of city
+            map.fitBounds(bounds);
         });
-        map.setOptions({minZoom : 12, maxZoom : 16 }) //fixed zoom to make more sense on search of city
-        map.fitBounds(bounds);
-    });
-}
+    }
 /////////////////
 
 
@@ -112,7 +112,7 @@ $(document).ready(function () {
         var userInput = $("#search-box").val();
 
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userInput + "&appid=" + APIkey + "&units=imperial"
-        
+
 
         $.ajax({
             url: queryURL,
@@ -136,7 +136,7 @@ $(document).ready(function () {
             var weathIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
             curDiv.append(pTemp, weathIcon)
 
-            $("#seven-days").append(curDiv)
+            $("#current").append(curDiv)
 
             sevenDay(lat, lon)
 
@@ -157,30 +157,36 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(response);
             console.log(response.daily)
-            
+
 
             var daily = response.daily
 
 
+            for (var i = 0; i < daily.length; i++) {
+                var unixTime = daily[i].dt
+                var date = moment.unix(unixTime).format("MM, DD, YYYY")
+                console.log(date);
+
+            }
+            // moment(daily[0].dt_txt).format('MMMM Do YYYY')
+                $("#seven-days").empty();
+
                 for (var i = 0; i < daily.length; i++) {
-                    var unixTime = daily[i].dt
-                    var date = moment.unix(unixTime).format("MM, DD, YYYY")
-                    console.log(date);
+
+                    var dayoneDiv = $("<div>")
+                    
+
+                    // var date = $("<p>").text(moment(daily[0].dt_txt).format('MMMM Do YYYY'));
+                    var pTemp = $("<p>").text(response.daily[i].temp.day + "F");
+                    var pWeath = $("<img>").attr("src", "http://openweathermap.org/img/w/" + daily[i].weather[0].icon + ".png")
+                    dayoneDiv.append(pTemp, pWeath)
+                    $("#seven-days").prepend(dayoneDiv)
+
+                    console.log(daily[i].temp.day)
 
                 }
-                // moment(daily[0].dt_txt).format('MMMM Do YYYY')
+            
 
-                var dayoneDiv = $("<div>")
-                
-                // var date = $("<p>").text(moment(daily[0].dt_txt).format('MMMM Do YYYY'));
-                var pTemp = $(".temp").text(response.daily[i].temp.day + "F");
-                var pWeath = $("<img>").attr("src", "http://openweathermap.org/img/w/" + daily[i].weather[0].icon + ".png")
-                // var pHumid = $("<p>").text("Humidity: " + fiveDay[0].main.humidity + "%")
-                dayoneDiv.append(date, pTemp, pWeath)
-                $(".card").empty().prepend(dayoneDiv)
-
-                console.log(response.daily[0].temp.day)
-                
 
         })
 
