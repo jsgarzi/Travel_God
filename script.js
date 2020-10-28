@@ -102,7 +102,7 @@ var currentLocation;
 //   }
 // }
 
-Weather API
+// Weather API
 
 $(document).ready(function () {
 
