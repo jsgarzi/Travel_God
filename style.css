@@ -17,9 +17,13 @@ body {background-color: #D7d0c8;
   /* height: 500px;
   width: 100px; */
 }
+#clear{
+  margin-left: 10px;
+}
 .cityHistory{
   height: 60px;
   width: 150px;
+  margin-left: 10px;
 }
     
 nav{
