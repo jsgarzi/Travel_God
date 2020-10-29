@@ -114,7 +114,7 @@ var searchHist;
 var STORAGE_KEY = ("searchBox_history");
 var citySearch = $("#citySearch");
 var cityInput = $("#travel-input");
-var cityHistory = $("#searchCity");
+var cityHistory = $("#Previously-searched");
 
 // When page load we need to get Searched History
 getSearchHist();
@@ -149,7 +149,7 @@ function displaySearchHist() {
     if (!searchHist.length) return;
 
     for (var city of searchHist) {
-        var cityEl = $("<button>")
+        var cityEl = $("<button>,")
             .addClass("cityHistory")
             .text(city)
             .click(clickedHist)

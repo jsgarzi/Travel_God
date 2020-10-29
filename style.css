@@ -10,11 +10,17 @@ body {background-color: #D7d0c8;
     height: 80vh;
     }
 
-.list-group-item {
-  height: 40px;
-  width: 80px;
+.list-group-item after{
+  position: relative;
+  display: table;
+  float:left;
+  /* height: 500px;
+  width: 100px; */
 }
-
+.cityHistory{
+  height: 60px;
+  width: 150px;
+}
     
 nav{
     background-color: #34353f;

@@ -16,6 +16,7 @@
         </script>
 </head>
 z
+
 <body>
 
     <!-- nav with home and about -->
@@ -28,10 +29,10 @@ z
             </ul>
         </div>
     </nav>
-    <div class="input-group mb-4" >
+    <div class="input-group mb-4">
         <input id="travel-input" class="controls" type="text" placeholder="Where do you want to visit?">
         <button class="btn btn-success" type="submit" id="citySearch">Go</button>
-        <div id= "searchCity"></div>
+        <div id="searchCity"></div>
     </div>
 
     <div id="map"></div>
@@ -191,10 +192,13 @@ z
                 </div>
             </div>
         </div>
-        <!-- local storage of prior locations searched (max amt??) -->
-        <div class = "list-group-item" id="Previously-searched"></div>
-        <!-- remove prev search from local store -->
-        <button id="clear">Clear</button>
+        <div>
+            <!-- local storage of prior locations searched (max amt??) -->
+            <div class="list-group-item" id="Previously-searched"></div>
+
+            <!-- remove prev search from local store -->
+            <button id="clear">Clear</button>
+        </div>
     </div>
 
     <!-- <script src="map.js"></script> -->
