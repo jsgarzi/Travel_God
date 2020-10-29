@@ -10,6 +10,11 @@ body {background-color: #D7d0c8;
     height: 80vh;
     }
 
+.list-group-item {
+  height: 40px;
+  width: 80px;
+}
+
     
 nav{
     background-color: #34353f;

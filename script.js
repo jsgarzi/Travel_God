@@ -72,7 +72,7 @@ function initMap() {
 
 
 
-//////////////// EVENT Test
+// //////////////// EVENT Test
 // var getEvents = [];
 // $.ajax({
 //   type: "GET",
@@ -101,3 +101,89 @@ function initMap() {
 //   }
 // }
 
+// Francis-Weaather
+// Store the City inputs in the local storage
+// Displaying the City buttons under the search bar
+// Cities searched will stay under search bar when page is reloaded
+// If user search a city that is already in the search history, that city button will just transfer as the first button
+// If user will click a city already in the search history, that city button will just transfer as the first button
+
+// Modifying global Variable
+var searchHist;
+
+var STORAGE_KEY = ("searchBox_history");
+var citySearch = $("#citySearch");
+var cityInput = $("#travel-input");
+var cityHistory = $("#searchCity");
+
+// When page load we need to get Searched History
+getSearchHist();
+
+displaySearchHist();
+citySearch.click(clickedSearch)
+
+function clickedSearch() {
+    var city = cityInput.val();
+    cityInput.val('');
+    manageList(city);
+}
+        //Same with prepend for HTML elements
+        // push=append    unshift=prepend 
+        searchHist.unshift(city);
+        console.log(searchHist);
+        setSearchHist();
+
+function clickedHist() {
+    var city = $(this).text()
+    manageList(city);
+}
+
+function manageList(city){
+    updateList(city);
+    setSearchHist();
+    displaySearchHist();
+}
+// Displaying search history
+function displaySearchHist() {
+    cityHistory.empty();
+    if (!searchHist.length) return;
+
+    for (var city of searchHist) {
+        var cityEl = $("<button>")
+            .addClass("cityHistory")
+            .text(city)
+            .click(clickedHist)
+
+        cityHistory.append(cityEl)
+    }
+}
+// This will not duplicate the city if user will search for a city that is already in the searched history
+function updateList(val) {
+    if (searchHist.includes(val)) {
+        // This will determine the position of the city in the array
+        var index = searchHist.indexOf(val);
+        // Removes the duplicate city in the array
+        searchHist.splice(index, 1);
+    }
+    // Adds the city in the first position of the array
+    searchHist.unshift(val);
+}
+
+
+// Local Storage functions!
+
+// function to update database
+function setSearchHist() {
+    setItem(STORAGE_KEY, searchHist)
+}
+function getSearchHist() {
+    searchHist = getItem(STORAGE_KEY)
+    // Giving the search history to be an array
+    if (searchHist === null) searchHist = []
+}
+function setItem(key, val) {
+    localStorage.setItem(key, JSON.stringify(val))
+}
+function getItem(key) {
+    return JSON.parse(localStorage.getItem(key))
+}
