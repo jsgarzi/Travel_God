@@ -69,37 +69,6 @@ var currentLocation;
 // /////////////////
 
 
-
-
-//////////////// EVENT Test
-// var getEvents = [];
-// $.ajax({
-//   type: "GET",
-//   url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m",
-//   async: true,
-//   dataType: "json",
-//   success: function(json) {
-//       getEvents.json = json;
-//       showEvents(json);
-//       console.log(json);
-//       }
-// });
-// function showEvents(json) {
-//   var items = $('#events .list-group-item'); //// might want to try grabbing just the class and use the class at each index instead of using an id 
-//   var events = json._embedded.events;
-//   var item = items.first(); ////may not need
-//   for (var i=0; i< events.length; i++) {
-//     item.children('.list-group-item-heading').text(events[i].name);
-//     item.children('.list-group-item-text').text(events[i].dates.start.localDate);
-//     item.children('.list-group-url').text(events[i].url);
-//     try {
-//       item.children('.venue').text(events[i]._embedded.venues[0].name + " in " + events[i]._embedded.venues[0].city.name + " url " + events[i]._embedded.venues[0].url);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-// }
-
 // Weather API
 
 $(document).ready(function () {
@@ -108,6 +77,60 @@ $(document).ready(function () {
 
     $("#travel-input").keypress(function (e) {
         if (e.which == 13) {
+
+
+            var city = [];
+            console.log(city);
+            
+            
+            
+                $(this).attr("city");
+            
+            
+                // function getLocation() {
+                //     if (navigator.geolocation) {
+                //         navigator.geolocation.getCurrentPosition(showPosition);
+                // }
+                // }
+            
+                // function showPosition(position) {
+                    // var latlon = position.coords.latitude + "," + position.coords.longitude;
+            
+                    var getEvents = [];
+            
+            
+                    $.ajax({
+                        type: "GET",
+                        url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m&city=" + city,
+                        async: true,
+                        dataType: "json",
+                        success: function(json) {
+                            getEvents.json = json;
+                            showEvents(json);
+                            console.log(json);
+                        },
+                        error: function(xhr, status, err) {
+                            console.log(err);
+                        }
+                    });
+            
+                function showEvents(json) {
+                    var events = json._embedded.events;
+                    for (var i = 0; i < events.length; i++) {
+                        var newDiv = $("<div>");
+                        var pName = $("<p>").text(json._embedded.events[i].name);
+                        var pDate = $("<p>").text(json._embedded.events[i].dates.start.localDate);
+                        var pLink = $("<p>").text(json._embedded.events[i].url);
+                        newDiv.append(pName, pDate, pLink);
+            
+                        $("#card-content-event" + [i]).append(newDiv);
+                    }
+                };
+            
+            
+            
+            // getLocation();
+            
 
             var userInput = $("#travel-input").val();
 
@@ -200,5 +223,46 @@ $(document).ready(function () {
     };
 
 
+
+    var city = [];
+    console.log(city);
+    
+    $("#travel-input").click(function() {
+    
+        $(this).attr("city");
+    
+            var getEvents = [];
+    
+    
+            $.ajax({
+                type: "GET",
+                url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m&city=" + city,
+                async: true,
+                dataType: "json",
+                success: function(json) {
+                    getEvents.json = json;
+                    showEvents(json);
+                    console.log(json);
+                },
+                error: function(xhr, status, err) {
+                    console.log(err);
+                }
+            });
+    
+        function showEvents(json) {
+            var events = json._embedded.events;
+            for (var i = 0; i < events.length; i++) {
+                var newDiv = $("<div>");
+                var pName = $("<p>").text(json._embedded.events[i].name);
+                var pDate = $("<p>").text(json._embedded.events[i].dates.start.localDate);
+                var pLink = $("<p>").text(json._embedded.events[i].url);
+                newDiv.append(pName, pDate, pLink);
+    
+                $("#card-content-event" + [i]).append(newDiv);
+            }
+        };
+    
+    
+    });
 
 });
