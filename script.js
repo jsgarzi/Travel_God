@@ -179,7 +179,6 @@ $(document).ready(function () {
 
             var dayoneDiv = $("<div>")
 
-
             // var date = $("<p>").text(moment(daily[0].dt_txt).format('MMMM Do YYYY'));
             var pTemp = $("<p>").text("Temperature " + response.daily[i].temp.day + "F");
             console.log(pTemp)
