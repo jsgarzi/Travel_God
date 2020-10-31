@@ -1,9 +1,28 @@
 # Travel_God
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Demo](#demo)
+* [Code Example](#code-example)
 
-Title : Travel God
+## General info
+Travel God aims to make the act of seeing whats happening at a given area easier. It centralizes various needs of a trip. In one search, the user can see a map of the area, a 7 day weather forecast, important locations nearby, and events. Once the user searches a city, it is saved to local stoarge and is then displayed as a new button. The button can be clicked to show all the information of that city once again. 
 
-Prob Statement: The tourist industry is booming but the problem is, who knows what to do? where to go? what weather will you face? Our application is a one stop shop and a travel buffs dream. Events, weather and local data to assist with any itinerary.
 
-Discript: Travel god aims to make the act of seeing whats happening at a given area easier.... check out a map of the area, a 7 day weather forcecast , 'important locations', events, and come back to check if updates have been made later (all searches are saved in local storage)
+## Technologies
+- Materialize
+- jQuery
+- Google Maps API
+- Ticketmaster API
+- Open Weather API 
 
-APIs: Google Maps, Ticketmaster, Open Weather API 
+## Demo
+
+
+## Code Example
+
+ ## Authors and Acknowledgement
+Naysalee Acosta, Francis Roy Balasabas, Isha Khosla, Carl Logerie, Julian Sgarzi
+
+### Link to the App
+

@@ -9,7 +9,6 @@ body {background-color: #D7d0c8;
   height: 80vh;
   }
 
-  
 nav{
   background-color: #34353f;
 }
@@ -21,51 +20,66 @@ nav{
 margin-bottom: 50px;
 }
 
+.lobster{font-family: 'Lobster', cursive;}
+
+.card-content{
+word-wrap: break-word;
+}
+.card-title{
+word-wrap: normal;
+}
+
+
 .pac-card {
-  margin: 10px 10px 0px 0;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  background-color: #fff;
-  font-family: Roboto;
+    margin: 10px 10px 0px 0;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    font-family: Roboto;
+  }
+  
+  #pac-container {
+    padding-bottom: 12px;
+    margin-right: 12px;
+    margin-top: 30px;
+  }
+  
+  .pac-controls {
+    display: inline-block;
+    padding: 5px 11px;
+  }
+  
+  .pac-controls label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }
+  
+  #travel-input {
+    background-color: #34353f;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 500px;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+    color: #ffffff;
+  }
+  
+  #travel-input:focus {
+    color: #ffffff;
 }
 
-#pac-container {
-  padding-bottom: 12px;
-  margin-right: 12px;
-  margin-top: 30px;
-}
+  #pac-input:focus {
+    border-color: #4d90fe;
+  }
+  
+  .card {
+    word-wrap: break-word;
+  }
 
-.pac-controls {
-  display: inline-block;
-  padding: 5px 11px;
-}
-
-.pac-controls label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
-
-#travel-input {
-  background-color: #34353f;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 500px;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 300px;
-  color: #ffffff;
-}
-
-#travel-input:focus {
-  color: #ffffff;
-}
-
-#pac-input:focus {
-  border-color: #4d90fe;
-}
-
+  
