@@ -24,6 +24,7 @@ var currentLocation;
             console.log(places) //where the name is captured 
             currentLocation = places[0].name; //storing the name
             console.log(currentLocation);
+            city.push(places);
             if (places.length == 0) {
                 return;
             }
@@ -34,7 +35,6 @@ var currentLocation;
             markers = [];
             // For each place, get the icon, name and location.
             const bounds = new google.maps.LatLngBounds();
-            latlngStore.push(bounds);
             places.forEach((place) => {
                 if (!place.geometry) {
                     console.log("Returned place contains no geometry");
@@ -67,74 +67,58 @@ var currentLocation;
             map.fitBounds(bounds);
         });
     }
-/////////////////
+///////////////
 
-var latlngStore = [];
-console.log(latlngStore)
+var city = [];
+console.log(city);
 
-const search = document.querySelector("#travel-input");
-search.addEventListener("click", () => {
-	console.log("clicked search");
-});
+$("#travel-input").click(function() {
 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        
-    }
-}
-
-function showPosition(position) {
-    var latlon = position.coords.latitude + "," + position.coords.longitude;
-
-    var getEvents = [];
+	$(this).attr("city");
 
 
-    $.ajax({
-        type: "GET",
-        url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m&latlong=" + latlon,
-        async: true,
-        dataType: "json",
-        success: function (json) {
-            getEvents.json = json;
-            showEvents(json);
-            console.log(json);
-        },
-        error: function (xhr, status, err) {
-            console.log(err);
-        }
-    });
+	// function getLocation() {
+	//     if (navigator.geolocation) {
+	//         navigator.geolocation.getCurrentPosition(showPosition);
+	// }
+	// }
 
-    // function showEvents(json) {
-    //     var items = $('#events .card');
-    //     var events = json._embedded.events;
-    //     var item = items.first();
-    //     for (var i = 0; i < events.length; i++) {
-    //         $(".card-event").append("<div>"+json._embedded.events[i].name+"</div>");
-    //         $(".card-content-event").append("<div>"+json._embedded.events[i].dates.start.localDate+"</div>");
-    //         $(".card-action-event").append("<div>"+json._embedded.events[i].url+"</div>");
-    //     }
-        
-    // }
+	// function showPosition(position) {
+		// var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+		var getEvents = [];
+
+
+		$.ajax({
+			type: "GET",
+			url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m&city=" + city,
+			async: true,
+			dataType: "json",
+			success: function(json) {
+				getEvents.json = json;
+				showEvents(json);
+				console.log(json);
+			},
+			error: function(xhr, status, err) {
+				console.log(err);
+			}
+		});
 
     function showEvents(json) {
-        var items = $('#events .card');
         var events = json._embedded.events;
-        var item = items.first();
         for (var i = 0; i < events.length; i++) {
-            var newDiv = $("<div>")
+            var newDiv = $("<div>");
             var pName = $("<p>").text(json._embedded.events[i].name);
             var pDate = $("<p>").text(json._embedded.events[i].dates.start.localDate);
             var pLink = $("<p>").text(json._embedded.events[i].url);
             newDiv.append(pName, pDate, pLink);
 
-            $("#card-content-event" + [i]).append(newDiv)
+            $("#card-content-event" + [i]).append(newDiv);
         }
     };
 
-}
 
-getLocation();
 
-////
+// getLocation();
+
+});
