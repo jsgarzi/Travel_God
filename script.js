@@ -74,28 +74,19 @@ var currentLocation;
 $(document).ready(function () {
 
     var APIkey = "11aae01829609ac12c0335ac0cc4505c";
-
+    
     $("#travel-input").keypress(function (e) {
         if (e.which == 13) {
-
-
+            
+            
             var city = [];
             console.log(city);
+            $("#current").empty();
             
             
             
                 $(this).attr("city");
-            
-            
-                // function getLocation() {
-                //     if (navigator.geolocation) {
-                //         navigator.geolocation.getCurrentPosition(showPosition);
-                // }
-                // }
-            
-                // function showPosition(position) {
-                    // var latlon = position.coords.latitude + "," + position.coords.longitude;
-            
+
                     var getEvents = [];
             
             
@@ -128,9 +119,6 @@ $(document).ready(function () {
                 };
             
             
-            
-            // getLocation();
-            
 
             var userInput = $("#travel-input").val();
 
@@ -157,7 +145,6 @@ $(document).ready(function () {
                 var curDiv = $("<div>");
                 var pCity = $("<p>").text(city);
                 var pTemp = $("<p>").text("Temperature: " + temp + "F");
-                // var pWeath = $("<p>").text("Weather: " + weather);
                 var weathIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + weather + ".png");
                 curDiv.append(pCity, pTemp, weathIcon)
 
@@ -187,14 +174,6 @@ $(document).ready(function () {
 
             var daily = response.daily
 
-
-            // for (var i = 0; i < daily.length; i++) {
-            //     var unixTime = daily[i].dt
-            //     var date = moment.unix(unixTime).format("MM, DD, YYYY")
-            //     console.log(date);
-
-            // }
-            // moment(daily[0].dt_txt).format('MMMM Do YYYY')
             $(".card-content").empty();
 
             for (var i = 0; i < daily.length; i++) {
@@ -202,7 +181,6 @@ $(document).ready(function () {
             var dayoneDiv = $("<div>")
 
 
-            // var date = $("<p>").text(moment(daily[0].dt_txt).format('MMMM Do YYYY'));
             var pTemp = $("<p>").text("Temperature " + response.daily[i].temp.day + "F");
             console.log(pTemp)
             var pWeath = $("<img>").attr("src", "http://openweathermap.org/img/w/" + daily[i].weather[0].icon + ".png")
