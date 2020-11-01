@@ -17,12 +17,13 @@ Travel God aims to make the act of seeing whats happening at a given area easier
 - Open Weather API 
 
 ## Demo
-
+![Alt text](/tGMap.jpeg "Travel God")
 
 ## Code Example
+https://github.com/jsgarzi/Travel_God
 
- ## Authors and Acknowledgement
+## Authors and Acknowledgement
 Naysalee Acosta, Francis Roy Balasabas, Isha Khosla, Carl Logerie, Julian Sgarzi, and Anita Dan
 
 ### Link to the App
-
+https://jsgarzi.github.io/Travel_God/index.html
