@@ -22,7 +22,7 @@ Travel God aims to make the act of seeing whats happening at a given area easier
 ## Code Example
 
  ## Authors and Acknowledgement
-Naysalee Acosta, Francis Roy Balasabas, Isha Khosla, Carl Logerie, Julian Sgarzi
+Naysalee Acosta, Francis Roy Balasabas, Isha Khosla, Carl Logerie, Julian Sgarzi, and Anita Dan
 
 ### Link to the App
 
