@@ -1,4 +1,3 @@
-  
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,14 +43,15 @@
         <li><a class = "lobster" href="about.html">About</a></li>
     </ul>
     
-
-    <input id="travel-input" class="controls" type="text" placeholder="Where do you want to visit?" />
+    <div class="input-group mb-4" >
+        <input id="travel-input" class="controls" type="text" placeholder="Where do you want to visit?">
+        <div id= "searchCity"></div>
+    </div>
     <div id="map"></div>
-    <div id="location"></div>
-
+    
     <!-- grid of the rest of info (location, up to 7 day weather, events (via ticketmaster), and previously searched buttons) -->
     <div>
-        <h2 class="center lobster">Location</h2>
+        <h2 class="center lobster" id="current">Location:</h2>
         <!-- temp, weather status (cloudy), we may want have icon that relates to weather status -->
         <div id="seven-days">
             <h4 class="center">7 Day Forecast:</h4>
@@ -200,11 +200,14 @@
                 </div>
             </div>
         </div>
+        <div>
         <!-- local storage of prior locations searched (max amt??) -->
-        <div id="Previously-searched"></div>
+        <div class="list-group-item" id="Previously-searched"></div>
         <!-- remove prev search from local store -->
-        <button id="clear"></button>
+        <button id="clear">Clear</button>
+        </div>
     </div>
+
 
     <!-- <script src="map.js"></script> -->
     <script src="script.js"></script>

@@ -82,3 +82,19 @@ word-wrap: normal;
 .card {
   word-wrap: break-word;
 }
+
+.list-group-item after{
+  position: relative;
+  display: table;
+  float:left;
+  /* height: 500px;
+  width: 100px; */
+}
+#clear{
+  margin-left: 10px;
+}
+.cityHistory{
+  height: 60px;
+  width: 150px;
+  margin-left: 10px;
+}

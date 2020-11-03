@@ -3,7 +3,6 @@ let map;
 
 var currentLocation;
 
-
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 40.7306, lng: -73.9352 },
@@ -24,7 +23,7 @@ function initMap() {
         console.log(places) //where the name is captured 
         currentLocation = places[0].name; //storing the name
         console.log(currentLocation);
-        city.push(currentLocation);
+        // city.push(currentLocation);
         if (places.length == 0) {
             return;
         }
@@ -67,52 +66,246 @@ function initMap() {
         map.fitBounds(bounds);
     });
 }
-///////////////
 
-var city = [];
-console.log(city);
+// Weather API
 
-$("#travel-input").keypress(function (e) {
-    if (e.which === 13) {
+$(document).ready(function () {
 
-        var searchedCity = $("#travel-input").val()
+    var APIkey = "11aae01829609ac12c0335ac0cc4505c";
 
-        $(this).attr("city.name");
+    $("#travel-input").keypress(function herFunc (e) {
+        if (e.which == 13) {
 
 
-        var getEvents = [];
+
+            var userInput = $("#travel-input").val();
+
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userInput + "&appid=" + APIkey + "&units=imperial"
+
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+
+                var weathResults = response;
+                console.log(weathResults);
+
+                var city = response.name;
+                var lat = response.coord.lat;
+                var lon = response.coord.lon;
+                var temp = response.main.temp;
+                var weather = response.weather[0].icon;
+
+                console.log(lat, lon);
+
+                var curDiv = $("<div>");
+                var pCity = $("<p>").text(city);
+                var pTemp = $("<p>").text("Temperature: " + temp + "F");
+                // var pWeath = $("<p>").text("Weather: " + weather);
+                var weathIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + weather + ".png");
+                curDiv.append(pCity, pTemp, weathIcon)
+
+                $("#current").append(curDiv)
+
+                sevenDay(lat, lon)
+
+            })
+        }
+    });
+    function sevenDay(lat, lon) {
+
+        var userInput = $("#travel-input").val();
+
+        var sevDURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude={current}" + "&appid=" + APIkey + "&units=imperial"
+
+        console.log(lat, lon)
 
 
         $.ajax({
-            type: "GET",
-            url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m&city=" + searchedCity,
-            async: true,
-            dataType: "json",
-            success: function (json) {
-                getEvents.json = json;
-                showEvents(json);
+            url: sevDURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+            console.log(response.daily)
+
+
+            var daily = response.daily
+
+
+            // for (var i = 0; i < daily.length; i++) {
+            //     var unixTime = daily[i].dt
+            //     var date = moment.unix(unixTime).format("MM, DD, YYYY")
+            //     console.log(date);
+
+            // }
+            // moment(daily[0].dt_txt).format('MMMM Do YYYY')
+            $(".card-content").empty();
+
+            for (var i = 0; i < daily.length; i++) {
+
+                var dayoneDiv = $("<div>")
+
+
+                // var date = $("<p>").text(moment(daily[0].dt_txt).format('MMMM Do YYYY'));
+                var pTemp = $("<p>").text("Temperature " + response.daily[i].temp.day + "F");
+                console.log(pTemp)
+                var pWeath = $("<img>").attr("src", "http://openweathermap.org/img/w/" + daily[i].weather[0].icon + ".png")
+                console.log(pWeath)
+                dayoneDiv.append(pTemp, pWeath)
+                $("#card" + [i]).append(dayoneDiv)
+
+                console.log(daily[i].temp.day)
+
+
+            }
+
+
+
+        })
+
+
+    };
+
+    // TicketMaster API /////////////////
+
+    // var city = [];
+    // console.log(city);
+
+    $("#travel-input").keypress(function  (e) {
+        if (e.which === 13) {
+            myFunc()
+        }
+    
+    });
+            function myFunc(query){
+            var searchedCity = $("#travel-input").val();
+            if(query){
+                searchedCity = query
+            }
+            manageList(searchedCity);
+            $(this).attr("city.name");
+
+            var getEvents = [];
+
+            $.ajax({
+                type: "GET",
+                url: "https://app.ticketmaster.com/discovery/v2/events.json?size=4&apikey=ElWPP9FatyxVq4ke0f4mPT8u3LtGG04m&city=" + searchedCity,
+                async: true,
+                dataType: "json",
+                success: function (json) {
+                    getEvents.json = json;
+                    showEvents(json);
+                    console.log(json);
+                },
+                error: function (xhr, status, err) {
+                    console.log(err);
+                }
+            });
+        }
+            function showEvents(json) {
                 console.log(json);
-            },
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
+                var events = json._embedded.events;
+                for (var i = 0; i < events.length; i++) {
+                    var newDiv = $("<div>");
+                    var pName = $("<p>").text(json._embedded.events[i].name);
+                    var pDate = $("<p>").text(json._embedded.events[i].dates.start.localDate);
+                    var pLink = $("<p>").text(json._embedded.events[i].url);
+                    newDiv.append(pName, pDate, pLink);
 
-        function showEvents(json) {
-            console.log(json);
-            var events = json._embedded.events;
-            for (var i = 0; i < events.length; i++) {
-                var newDiv = $("<div>");
-                var pName = $("<p>").text(json._embedded.events[i].name);
-                var pDate = $("<p>").text(json._embedded.events[i].dates.start.localDate);
-                var pLink = $("<p>").text(json._embedded.events[i].url);
-                newDiv.append(pName, pDate, pLink);
-
-                $("#card-content-event" + [i]).append(newDiv);
-            }
-        };
+                    $("#card-content-event" + [i]).append(newDiv);
+                }
+            };
 
 
+    // Store the City inputs in the local storage
+    // Displaying the City buttons under the search bar
+    // Cities searched will stay under search bar when page is reloaded
+    // If user search a city that is already in the search history, that city button will just transfer as the first button
+    // If user will click a city already in the search history, that city button will just transfer as the first button
+    // Modifying global Variable
+    var searchHist;
+    var STORAGE_KEY = ("searchBox_history");
+    var citySearch = $("#citySearch");
+    var cityInput = $("#travel-input");
+    var cityHistory = $("#Previously-searched");
+    // When page load we need to get Searched History
+    getSearchHist();
+    displaySearchHist();
+    citySearch.click(clickedSearch)
+    function clickedSearch() {
+        console.log("Did you click me?")
+        var city = cityInput.val();
+        cityInput.val('');
+        manageList(city);
+    }
+    //Same with prepend for HTML elements
+    // push=append    unshift=prepend 
+    //searchHist.unshift(city);
+    console.log("AHHHHHHHH!")//
+    console.log(searchHist);
+   // setSearchHist();
+    function clickedHist() {
+        var city = $(this).text()
+        myFunc(city)
+        manageList(city);
+    }
+    function manageList(city) {
+        updateList(city);
+        // setSearchHist();
+        // displaySearchHist();
+    }
+    // Displaying search history
+    function displaySearchHist() {
+        cityHistory.empty();
+        if (!searchHist.length) return;
+        for (var city of searchHist) {
+            var cityEl = $("<button>,")
+            .addClass("cityHistory")
+            .text(city)
+            .click(clickedHist)
+            cityHistory.append(cityEl)
+        }
+    }
+    // This will not duplicate the city if user will search for a city that is already in the searched history
+    function updateList(val) {
+        if (searchHist.includes(val)) {
+            // This will determine the position of the city in the array
+            var index = searchHist.indexOf(val);
+            // Removes the duplicate city in the array
+            searchHist.splice(index, 1);
+        }
+        // Adds the city in the first position of the array
+        searchHist.unshift(val);
+        setSearchHist();
+        displaySearchHist();
+    }
+    // Local Storage functions!
+    // function to update database
+    function setSearchHist() {
+        console.log("setSearchHist", searchHist)
+        setItem(STORAGE_KEY, searchHist)
+    }
+    function getSearchHist() {
+        console.log("getSearchHist")
+        searchHist = getItem(STORAGE_KEY)
+        // Giving the search history to be an array
+        if (searchHist === null) searchHist = []
+    }
+    function setItem(key, val) {
+        localStorage.setItem(key, JSON.stringify(val))
+    }
+    function getItem(key) {
+        return JSON.parse(localStorage.getItem(key))
     }
 
+    $('#clear').on("click", function(event){
+        event.preventDefault()
+        setItem(STORAGE_KEY, [])
+        location.reload();
+    })
 });
+
+
+
