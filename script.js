@@ -73,10 +73,10 @@ $(document).ready(function () {
 
     var APIkey = "11aae01829609ac12c0335ac0cc4505c";
 
-    $("#travel-input").keypress(function herFunc (e) {
+    $("#travel-input").keypress(function (e) {
         if (e.which == 13) {
 
-
+            $("#current").empty();
 
             var userInput = $("#travel-input").val();
 
@@ -176,6 +176,7 @@ $(document).ready(function () {
     $("#travel-input").keypress(function  (e) {
         if (e.which === 13) {
             myFunc()
+            $("#card-content-event").empty();
         }
     
     });
